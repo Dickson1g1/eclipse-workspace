@@ -1,0 +1,22 @@
+import java.util.Scanner;
+
+public class Addition {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		//  number1 = 3;
+		//  number2 = 5;
+		
+		Scanner inp = new Scanner(System.in);
+		System.out.println("Please give me a number");
+		int number1 = inp.nextInt();
+		System.out.println("Please give me another number");
+		int number2 = inp.nextInt();
+		
+		int sum = number1 + number2;
+		
+		System.out.println("The sum is: ");
+		System.out.println(sum);
+	}
+
+}
