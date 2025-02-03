@@ -23,7 +23,7 @@ public class Main {
             System.out.println("8. Exit");
             System.out.print("Enter your choice: ");
             choice = inp.nextInt();
-            inp.nextLine(); // Consume newline
+            inp.nextLine(); 
 
             switch (choice) {
                 case 1:
@@ -61,10 +61,33 @@ public class Main {
     private static void addTask(Scanner inp) {
         System.out.print("Enter task title: ");
         String title = inp.nextLine();
-        System.out.print("Enter task status (PEND/DONE): ");
-        String status = inp.nextLine();
-        System.out.print("Enter task priority (LOW/MED/HIGH/CRIT): ");
-        String priority = inp.nextLine();
+        
+        //System.out.print("Enter task status (PEND/DONE): ");
+        //String status = inp.nextLine();
+        String status;
+        while (true) {
+            System.out.print("Enter task status (PEND/DONE): ");
+            status = inp.nextLine().toUpperCase(); 
+            if (status.equals("PEND") || status.equals("DONE")) {
+                break; 
+            } else {
+                System.out.println("Invalid status. Please enter 'PEND' or 'DONE'.");
+            }
+        }
+
+        //System.out.print("Enter task priority (LOW/MED/HIGH/CRIT): ");
+        //String priority = inp.nextLine();
+        String priority;
+        while (true) {
+            System.out.print("Enter task priority (LOW/MED/HIGH/CRIT): ");
+            priority = inp.nextLine().toUpperCase(); 
+            if (priority.equals("LOW") || priority.equals("MED") || priority.equals("HIGH") || priority.equals("CRIT")) {
+                break; 
+            } else {
+                System.out.println("Invalid priority. Please enter 'LOW', 'MED', 'HIGH', or 'CRIT'.");
+            }
+        }
+        
         Task task = new Task(title, status, priority);
         taskList.addTask(task);
         System.out.println("Task added successfully.");
@@ -108,9 +131,9 @@ public class Main {
     }
 
     private static void removeTask(Scanner inp) {
-        System.out.print("Enter task title to remove: ");
-        String title = inp.nextLine();
-        taskList.removeTask(title);
+        System.out.print("Enter task ID to remove: ");
+        String id = inp.nextLine();
+        taskList.removeTask(id);
         System.out.println("Task removed successfully.");
     }
 
