@@ -31,7 +31,7 @@ public class Task {
     
     @Override
     public String toString() {
-        // Create a StringBuilder to build the string representation
+        
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append(id);

@@ -5,9 +5,10 @@ import java.util.Scanner;
 public class Main {
     private static TaskList taskList = new TaskList();
     private static final String FILE_NAME = "C:\\Users\\bdick\\eclipse-workspace\\Project1\\tasks.csv";
+    private static boolean tasksLoaded = false; 
 
     public static void main(String[] args) {
-        loadTasks();
+        loadTasks(); 
         Scanner inp = new Scanner(System.in);
         int choice;
 
@@ -45,7 +46,7 @@ public class Main {
                     saveTasks();
                     break;
                 case 7:
-                    loadTasks();
+                    loadTasks(); // Attempt to load tasks again
                     break;
                 case 8:
                     System.out.println("Exiting...");
@@ -62,8 +63,6 @@ public class Main {
         System.out.print("Enter task title: ");
         String title = inp.nextLine();
         
-        //System.out.print("Enter task status (PEND/DONE): ");
-        //String status = inp.nextLine();
         String status;
         while (true) {
             System.out.print("Enter task status (PEND/DONE): ");
@@ -75,8 +74,6 @@ public class Main {
             }
         }
 
-        //System.out.print("Enter task priority (LOW/MED/HIGH/CRIT): ");
-        //String priority = inp.nextLine();
         String priority;
         while (true) {
             System.out.print("Enter task priority (LOW/MED/HIGH/CRIT): ");
@@ -144,12 +141,18 @@ public class Main {
                 writer.newLine();
             }
             System.out.println("Tasks saved successfully.");
-        } catch (IOException e) {
+        } 
+        catch (IOException e) {
             System.out.println("Error saving tasks: " + e.getMessage());
         }
     }
 
     private static void loadTasks() {
+        if (tasksLoaded) {
+            System.out.println("Tasks have already been loaded. No further loading is necessary.");
+            return; // Exit if tasks have already been loaded
+        }
+
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -159,6 +162,7 @@ public class Main {
                     taskList.addTask(task);
                 }
             }
+            tasksLoaded = true; // Set the flag to true after loading
             System.out.println("Tasks loaded successfully.");
         } catch (IOException e) {
             System.out.println("Error loading tasks: " + e.getMessage());
