@@ -44,9 +44,4 @@ public class Task {
 
         return stringBuilder.toString();
     }
-
-//    @Override
-//    public String toString() {
-//        return id + "," + title + "," + status + "," + priority;
-//  }
 }

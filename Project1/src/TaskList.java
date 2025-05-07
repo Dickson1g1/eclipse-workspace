@@ -25,9 +25,6 @@ public class TaskList {
         tasks.addAll(tasksToKeep);
     }
 
-//    public void removeTask(String id) {
-//        tasks.removeIf(task -> task.getId().equals(id));
-//    }
 
     public ArrayList<Task> getTasks() {
         return tasks;

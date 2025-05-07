@@ -4,10 +4,11 @@ import java.util.Scanner;
 
 public class Main {
     private static TaskList taskList = new TaskList();
-    private static final String FILE_NAME = "C:\\Users\\bdick\\eclipse-workspace\\Project1\\tasks.csv";
-    private static boolean tasksLoaded = false; 
+    private static final String FILE_NAME = "tasks.csv";
+    private static boolean tasksLoaded = false;
 
     public static void main(String[] args) {
+        createFileIfNotExists(); 
         loadTasks(); 
         Scanner inp = new Scanner(System.in);
         int choice;
@@ -46,7 +47,7 @@ public class Main {
                     saveTasks();
                     break;
                 case 7:
-                    loadTasks(); // Attempt to load tasks again
+                    loadTasks(); 
                     break;
                 case 8:
                     System.out.println("Exiting...");
@@ -57,6 +58,19 @@ public class Main {
                     System.out.println("Invalid choice. Please try again by choosing one of the options.");
             }
         } 
+    }
+
+    private static void createFileIfNotExists() {
+        File file = new File(FILE_NAME);
+        try {
+            if (file.createNewFile()) {
+                System.out.println("CSV file created: " + FILE_NAME);
+            } else {
+                System.out.println("CSV file already exists: " + FILE_NAME);
+            }
+        } catch (IOException e) {
+            System.out.println("Error creating CSV file: " + e.getMessage());
+        }
     }
 
     private static void addTask(Scanner inp) {
@@ -128,6 +142,15 @@ public class Main {
     }
 
     private static void removeTask(Scanner inp) {
+    	System.out.println("Here are all the tasks you have: ");
+    	ArrayList<Task> tasks = taskList.getTasks();
+        if (tasks.isEmpty()) {
+            System.out.println("No tasks available.");
+        } else {
+            for (Task task : tasks) {
+                System.out.println(task);
+            }
+        }
         System.out.print("Enter task ID to remove: ");
         String id = inp.nextLine();
         taskList.removeTask(id);
@@ -149,8 +172,8 @@ public class Main {
 
     private static void loadTasks() {
         if (tasksLoaded) {
-            System.out.println("Tasks have already been loaded. No further loading is necessary.");
-            return; // Exit if tasks have already been loaded
+            System.out.println("Tasks have already been loaded.");
+            return;
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
@@ -162,7 +185,7 @@ public class Main {
                     taskList.addTask(task);
                 }
             }
-            tasksLoaded = true; // Set the flag to true after loading
+            tasksLoaded = true; 
             System.out.println("Tasks loaded successfully.");
         } catch (IOException e) {
             System.out.println("Error loading tasks: " + e.getMessage());
